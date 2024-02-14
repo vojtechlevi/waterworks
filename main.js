@@ -1,4 +1,3 @@
-
 import { threeInit } from "./modules/threeInit";
 
 import {
@@ -8,15 +7,22 @@ import {
 } from "./modules/fetchApi.js";
 
 measureLocation().then((locations) => {
-  //bygg options lista från denna data
-  console.log(locations);
+  const dropdown = document.getElementById("location");
+  // Build options list from this data
+  locations.forEach((location) => {
+    const option = document.createElement("option");
+    option.value = location.Code;
+    option.text = location.Description;
+
+    dropdown.appendChild(option);
+  });
 });
+
 document
   .querySelector('form[name="data"]')
   .addEventListener("submit", function (event) {
-  
     event.preventDefault();
-  
+
     const location = document.getElementById("location").value;
     const startDate = document.getElementById("startdate").value;
     const endDate = document.getElementById("enddate").value;
