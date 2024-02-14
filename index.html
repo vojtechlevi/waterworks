@@ -10,7 +10,7 @@
     <!-- Navigation Toggle -->
     <button
       type="button"
-      class="text-gray-500 hover:text-gray-600"
+      class="text-gray-500 hover:text-gray-600 absolute"
       data-hs-overlay="#docs-sidebar"
       aria-controls="docs-sidebar"
       aria-label="Toggle navigation"
@@ -524,9 +524,45 @@
       </nav>
     </div>
     <div class="nav"></div>
-    <header class="bg-blue-500 text-white p-4">
-      <h1 class="text-2xl">Welcome to my project!</h1>
-    </header>
+    <form action="#" method="post" name="data" class="text-center">
+      <!-- Floating Select -->
+      <div
+        class="absolute border-solid border-black border-2 rounded-lg right-0"
+      >
+        <select
+          id="location"
+          class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+        >
+          <option selected>Tryck för att välja plats</option>
+          <option value="MolndalCentrum">Mölndal Centrum</option>
+        </select>
+        <label
+          for="location"
+          class="absolute top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500"
+          >Plats</label
+        >
+        <label for="startdate">Start Datum</label>
+
+        <input
+          type="date"
+          id="startdate"
+          class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+        />
+        <label for="enddate">Slut Datum</label>
+        <input
+          type="date"
+          id="enddate"
+          class="peer p-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+        />
+        <button
+          class="peer pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+          type="submit"
+        >
+          Kolla data
+        </button>
+      </div>
+      <!-- End Floating Select -->
+    </form>
     <div class="render-container"></div>
     <script type="module" src="/main.js"></script>
     <script src="./node_modules/preline/dist/preline.js"></script>
