@@ -1,3 +1,4 @@
+
 import { threeInit } from "./modules/threeInit";
 
 import {
@@ -6,12 +7,16 @@ import {
   fetchSiteData,
 } from "./modules/fetchApi.js";
 
+measureLocation().then((locations) => {
+  //bygg options lista från denna data
+  console.log(locations);
+});
 document
   .querySelector('form[name="data"]')
   .addEventListener("submit", function (event) {
-    // Prevent the form from being submitted
+  
     event.preventDefault();
-    // Get the form elements
+  
     const location = document.getElementById("location").value;
     const startDate = document.getElementById("startdate").value;
     const endDate = document.getElementById("enddate").value;
