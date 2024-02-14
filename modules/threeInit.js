@@ -1,9 +1,9 @@
 import * as THREE from "three";
 import { LoadGLTFByPath } from "./threeHelpers";
-import { water } from "./threeWater";
+import { animateWater, water } from "./threeWater";
 
-export function threeInit() {
-  let scene, camera, renderer;
+export async function threeInit() {
+  let scene, camera, renderer, waterList;
   let cameraList = [];
 
   scene = new THREE.Scene();
@@ -13,13 +13,10 @@ export function threeInit() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  let waterPlane = water(scene);
-
-  waterPlane.position.y = 0.2;
-
   LoadGLTFByPath(scene, "/waterworks.gltf")
-    .then(() => {
+    .then(async () => {
       retrieveListOfCameras(scene);
+      waterList = await water(scene);
     })
     .catch((error) => {
       console.error("Error loading JSON scene:", error);
@@ -50,6 +47,13 @@ export function threeInit() {
 
   function animate() {
     requestAnimationFrame(animate);
+
+    if (waterList != undefined && waterList.length > 0) {
+      waterList.forEach((water) => {
+        waterList[0].position.y = 0.6;
+        animateWater(water);
+      });
+    }
 
     renderer.render(scene, camera);
   }
