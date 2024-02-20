@@ -41,3 +41,15 @@ document
   });
 
 threeInit();
+
+const today = new Date().toISOString().split("T")[0];
+
+document.getElementById("startdate").setAttribute("max", today);
+document.getElementById("enddate").setAttribute("max", today);
+
+const startDateInput = document.getElementById("startdate");
+const endDateInput = document.getElementById("enddate");
+
+startDateInput.addEventListener("change", function () {
+  endDateInput.min = this.value;
+});
