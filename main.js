@@ -1,4 +1,4 @@
-import { threeInit } from "./modules/threeInit";
+import { threeInit, setMeasurements } from "./modules/threeInit";
 
 import {
   valuesStartEnd,
@@ -28,14 +28,11 @@ document
     const endDate = document.getElementById("enddate").value;
 
     fetchSiteData(location).then((siteData) => {
-      console.log(`SG: ${siteData.sg}`);
-      console.log(`DG: ${siteData.dg}`);
+      // console.log("sgdg: ", siteData);
 
       valuesStartEnd(startDate, endDate, location).then((measurements) => {
-        measurements.forEach((measurement) => {
-          console.log(`Date: ${measurement.date}`);
-          console.log(`Value: ${measurement.value}`);
-        });
+        // console.log("levels: ", measurements);
+        setMeasurements({ measurements, sgDg: siteData });
       });
     });
   });
