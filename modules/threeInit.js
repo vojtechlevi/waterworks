@@ -2,6 +2,22 @@ import * as THREE from "three";
 import { LoadGLTFByPath } from "./threeHelpers";
 import { animateWater, water } from "./threeWater";
 
+let measurements = [];
+let sgDg = { sg: 0, dg: 1 };
+let targetLevel = 0;
+
+function calcWaterLevel(sg, dg, level) {
+  console.log((level.value - sg) / (dg - sg));
+  return (level.value - sg) / (dg - sg);
+}
+
+export function setMeasurements(data) {
+  measurements = data.measurements;
+  sgDg = data.sgDg;
+
+  targetLevel = calcWaterLevel(sgDg.sg, sgDg.dg, measurements[0]);
+}
+
 export async function threeInit() {
   let scene, camera, renderer, waterList;
   let cameraList = [];
@@ -50,7 +66,11 @@ export async function threeInit() {
 
     if (waterList != undefined && waterList.length > 0) {
       waterList.forEach((water) => {
-        waterList[0].position.y = 0.6;
+        if (measurements.length) {
+          const currentWaterLevel = water.position.y;
+          const adjustment = currentWaterLevel < targetLevel ? 0.001 : -0.001;
+          water.position.y += adjustment;
+        }
         animateWater(water);
       });
     }
