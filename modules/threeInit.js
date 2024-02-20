@@ -5,17 +5,20 @@ import { animateWater, water } from "./threeWater";
 let measurements = [];
 let sgDg = { sg: 0, dg: 1 };
 let targetLevel = 0;
+let index = 0;
 
 function calcWaterLevel(sg, dg, level) {
-  console.log((level.value - sg) / (dg - sg));
-  return (level.value - sg) / (dg - sg);
+  dg = dg < level.value ? level.value : dg;
+
+  let calculatedLevel = (level.value - sg) / (dg - sg);
+  return calculatedLevel;
 }
 
 export function setMeasurements(data) {
   measurements = data.measurements;
   sgDg = data.sgDg;
 
-  targetLevel = calcWaterLevel(sgDg.sg, sgDg.dg, measurements[0]);
+  targetLevel = calcWaterLevel(sgDg.sg, sgDg.dg, measurements[index]);
 }
 
 export async function threeInit() {
@@ -68,8 +71,21 @@ export async function threeInit() {
       waterList.forEach((water) => {
         if (measurements.length) {
           const currentWaterLevel = water.position.y;
-          const adjustment = currentWaterLevel < targetLevel ? 0.001 : -0.001;
-          water.position.y += adjustment;
+
+          if (Math.abs(currentWaterLevel - targetLevel) < 0.001) {
+            water.position.y = targetLevel;
+            index++;
+            if (index < measurements.length) {
+              targetLevel = calcWaterLevel(
+                sgDg.sg,
+                sgDg.dg,
+                measurements[index]
+              );
+            }
+          } else {
+            const adjustment = currentWaterLevel < targetLevel ? 0.001 : -0.001;
+            water.position.y += adjustment;
+          }
         }
         animateWater(water);
       });
