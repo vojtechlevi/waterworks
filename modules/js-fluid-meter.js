@@ -1,3 +1,4 @@
+import { currentLevel } from "./threeInit";
 export function FluidMeter() {
   var context;
   var targetContainer;
@@ -14,13 +15,13 @@ export function FluidMeter() {
     fontFamily: "Arial",
     fontFillStyle: "white",
     size: 300,
-    borderWidth: 25,
+    borderWidth: 10,
     backgroundColor: "#e2e2e2",
     foregroundColor: "#fafafa",
   };
 
-  var currentFillPercentage = 0;
-  var fillPercentage = 0;
+  var currentFillPercentage = 99;
+  var fillPercentage = 99;
 
   //#region fluid context values
   var foregroundFluidLayer = {
@@ -328,10 +329,14 @@ export function FluidMeter() {
   }
 
   function drawText() {
-    var text = options.drawPercentageSign
-      ? currentFillPercentage.toFixed(0) + "%"
-      : currentFillPercentage.toFixed(0);
-
+    var text;
+    if (currentLevel === 0) {
+      text = "Loading...";
+    } else {
+      text = options.drawPercentageSign
+        ? currentLevel.toFixed(2) + "m"
+        : currentLevel.toFixed(2);
+    }
     context.save();
     context.font = getFontSize();
     context.fillStyle = options.fontFillStyle;

@@ -1,11 +1,15 @@
-import { threeInit, setMeasurements } from "./modules/threeInit";
+import {
+  threeInit,
+  setMeasurements,
+  targetPercentage,
+  sgDg,
+} from "./modules/threeInit";
 import {
   valuesStartEnd,
   measureLocation,
   fetchSiteData,
 } from "./modules/fetchApi.js";
 import { FluidMeter } from "./modules/js-fluid-meter.js";
-
 measureLocation().then((locations) => {
   const dropdown = document.getElementById("location");
   // Build options list from this data
@@ -28,10 +32,7 @@ document
     const endDate = document.getElementById("enddate").value;
 
     fetchSiteData(location).then((siteData) => {
-      // console.log("sgdg: ", siteData);
-
       valuesStartEnd(startDate, endDate, location).then((measurements) => {
-        // console.log("levels: ", measurements);
         setMeasurements({ measurements, sgDg: siteData });
       });
     });
@@ -65,14 +66,14 @@ fm3.init({
     foregroundColor: "#1F2937",
     foregroundFluidLayer: {
       fillStyle: "#16E1FF",
-      angularSpeed: 30,
+      angularSpeed: 5,
       maxAmplitude: 5,
       frequency: 30,
       horizontalSpeed: -20,
     },
     backgroundFluidLayer: {
       fillStyle: "#4F8FC6",
-      angularSpeed: 100,
+      angularSpeed: 5,
       maxAmplitude: 3,
       frequency: 22,
       horizontalSpeed: 20,
@@ -81,7 +82,7 @@ fm3.init({
 });
 
 window.onload = function () {
-  document.getElementById("submit-percentage-3").onclick = function () {
-    fm3.setPercentage(Number(document.getElementById("percentage-3").value));
-  };
+  setInterval(function () {
+    fm3.setPercentage(targetPercentage);
+  });
 };
