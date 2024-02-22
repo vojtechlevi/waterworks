@@ -10,6 +10,10 @@ import {
   fetchSiteData,
 } from "./modules/fetchApi.js";
 import { FluidMeter } from "./modules/js-fluid-meter.js";
+import { playFunction } from "./modules/playpause-icon.js";
+
+export const playbtn = document.getElementById("play-pause");
+
 measureLocation().then((locations) => {
   const dropdown = document.getElementById("location");
   // Build options list from this data
@@ -86,3 +90,7 @@ window.onload = function () {
     fm3.setPercentage(targetPercentage);
   });
 };
+
+playbtn.addEventListener("click", function () {
+  playFunction(playbtn);
+});
