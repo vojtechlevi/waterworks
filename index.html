@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>My first three.js app</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/style.css" />
-  </head>
-  <body>
+        <meta charset="utf-8" />
+        <title>Waterworks</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body>
     <div
       class="hs-overlay absolute bottom-2 left-2 lg:left-[22vw] flex items-center gap-3"
     >
@@ -64,66 +64,135 @@
           href="#"
           aria-label="Brand"
           >Waterworks</a
+
+        <!-- Three model loading screen -->
+        <div
+            id="three-loading"
+            class="fixed left-0 top-0 z-20 flex h-screen w-screen items-center justify-center bg-white"
+
         >
-        <form action="#" method="post" name="data" class="text-center">
-          <!-- Floating Select -->
-          <div
-            class="absolute border-solid rounded-lg right-0 w-full flex flex-col gap-5 px-4"
-          >
-            <select
-              required
-              id="location"
-              class="peer p-4 pe-9 block w-full 3xl:h-28 border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-loader-2 h-32 w-32 animate-spin text-gray-800 lg:ml-[20vw]"
             >
-              <option value="" selected>Tryck för att välja plats</option>
-            </select>
-            <label
-              for="location"
-              class="absolute 3xl:h-28 top-0 start-0 p-4 h-full truncate pointer-events-none transition ease-in-out duration-100 border border-transparent dark:text-white peer-disabled:opacity-50 peer-disabled:pointer-events-none peer-focus:text-xs peer-focus:-translate-y-1.5 peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-gray-500"
-            ></label>
-            <div>
-              <label class="text-white" for="startdate">Start Datum</label>
-
-              <input
-                required
-                type="date"
-                id="startdate"
-                class="peer p-4 pe-9 block 3xl:h-28 w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-              />
-            </div>
-            <div>
-              <label class="text-white" for="enddate">Slut Datum</label>
-              <input
-                required
-                type="date"
-                id="enddate"
-                class="peer p-4 pe-9 block 3xl:h-28 w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-white dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:pt-6 [&:not(:placeholder-shown)]:pb-2 autofill:pt-6 autofill:pb-2"
-              />
-            </div>
-            <button
-              class="peer pe-9 block 3xl:h-28 w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-blue-900 dark:border-gray-700 dark:text-white dark:focus:ring-gray-600 focus:pt-6 focus:pb-2 [&:not(:placeholder-shown)]:p-4 autofill:pt-6 autofill:pb-2"
-              type="submit"
-            >
-              <h1 class="text-2xl">Sök</h1>
-            </button>
-          </div>
-          <!-- End Floating Select -->
-        </form>
-      </div>
-    </div>
-    <div class="nav"></div>
-
-    <div class="render-container"></div>
-    <div class="absolute right-1">
-      <div class="row">
-        <div class="col text-center">
-          <div id="fluid-meter-3"></div>
-          <input type="hidden" id="percentage-3" type="number" value="50" />
-          <button class="hidden" id="submit-percentage-3">submit</button>
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
         </div>
-      </div>
-    </div>
-    <script type="module" src="/main.js"></script>
-    <script src="./node_modules/preline/dist/preline.js"></script>
-  </body>
+        <!-- Navigation Toggle -->
+        <button
+            type="button"
+            class="absolute text-gray-500 hover:text-gray-600"
+            data-hs-overlay="#docs-sidebar"
+            aria-controls="docs-sidebar"
+            aria-label="Toggle navigation"
+        >
+            <span class="sr-only">Toggle Navigation</span>
+            <svg
+                class="size-10 flex-shrink-0"
+                width="36"
+                height="36"
+                fill="white"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                />
+            </svg>
+        </button>
+        <!-- End Navigation Toggle -->
+
+        <div
+            id="docs-sidebar"
+            class="hs-overlay hs-overlay-open:translate-x-0 fixed bottom-0 start-0 top-0 z-[60] hidden w-[50vw] -translate-x-full transform overflow-y-auto border-e border-gray-200 bg-white pb-10 pt-7 transition-all duration-300 lg:bottom-0 lg:end-auto lg:block lg:w-[20vw] lg:translate-x-0 xl:min-w-[20vw] dark:border-gray-700 dark:bg-gray-800 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-slate-700 [&::-webkit-scrollbar]:w-2"
+        >
+            <div class="text-center">
+                <a
+                    class="flex-none text-xl font-semibold dark:text-white"
+                    href="#"
+                    aria-label="Brand"
+                    >Waterworks</a
+                >
+                <form action="#" method="post" name="data" class="text-center">
+                    <!-- Floating Select -->
+                    <div
+                        class="absolute right-0 flex w-full flex-col gap-5 rounded-lg border-solid px-4"
+                    >
+                        <select
+                            required
+                            id="location"
+                            class="3xl:h-28 peer block w-full rounded-lg border-gray-200 p-4 pe-9 text-sm autofill:pb-2 autofill:pt-6 focus:border-blue-500 focus:pb-2 focus:pt-6 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-white dark:text-gray-400 dark:focus:ring-gray-600 [&:not(:placeholder-shown)]:pb-2 [&:not(:placeholder-shown)]:pt-6"
+                        >
+                            <option value="" selected>
+                                Tryck för att välja plats
+                            </option>
+                        </select>
+                        <label
+                            for="location"
+                            class="3xl:h-28 pointer-events-none absolute start-0 top-0 h-full truncate border border-transparent p-4 transition duration-100 ease-in-out peer-focus:-translate-y-1.5 peer-focus:text-xs peer-focus:text-gray-500 peer-disabled:pointer-events-none peer-disabled:opacity-50 peer-[:not(:placeholder-shown)]:-translate-y-1.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 dark:text-white"
+                        ></label>
+                        <div>
+                            <label class="text-white" for="startdate"
+                                >Start Datum</label
+                            >
+
+                            <input
+                                required
+                                type="date"
+                                id="startdate"
+                                class="3xl:h-28 peer block w-full rounded-lg border-gray-200 p-4 pe-9 text-sm autofill:pb-2 autofill:pt-6 focus:border-blue-500 focus:pb-2 focus:pt-6 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-white dark:text-gray-400 dark:focus:ring-gray-600 [&:not(:placeholder-shown)]:pb-2 [&:not(:placeholder-shown)]:pt-6"
+                            />
+                        </div>
+                        <div>
+                            <label class="text-white" for="enddate"
+                                >Slut Datum</label
+                            >
+                            <input
+                                required
+                                type="date"
+                                id="enddate"
+                                class="3xl:h-28 peer block w-full rounded-lg border-gray-200 p-4 pe-9 text-sm autofill:pb-2 autofill:pt-6 focus:border-blue-500 focus:pb-2 focus:pt-6 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-white dark:text-gray-400 dark:focus:ring-gray-600 [&:not(:placeholder-shown)]:pb-2 [&:not(:placeholder-shown)]:pt-6"
+                            />
+                        </div>
+                        <button
+                            class="3xl:h-28 peer block w-full rounded-lg border-gray-200 pe-9 text-sm autofill:pb-2 autofill:pt-6 focus:border-blue-500 focus:pb-2 focus:pt-6 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-blue-900 dark:text-white dark:focus:ring-gray-600 [&:not(:placeholder-shown)]:p-4"
+                            type="submit"
+                        >
+                            <h1 class="text-2xl">Sök</h1>
+                        </button>
+                    </div>
+                    <!-- End Floating Select -->
+                </form>
+            </div>
+        </div>
+        <div class="nav"></div>
+
+        <div class="render-container"></div>
+        <div class="absolute right-1">
+            <div class="row">
+                <div class="col text-center">
+                    <div id="fluid-meter-3"></div>
+                    <input
+                        type="hidden"
+                        id="percentage-3"
+                        type="number"
+                        value="50"
+                    />
+                    <button class="hidden" id="submit-percentage-3">
+                        submit
+                    </button>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="/main.js"></script>
+        <script src="./node_modules/preline/dist/preline.js"></script>
+    </body>
 </html>

@@ -5,24 +5,39 @@ import { isPlaying, playFunction } from "./playpause-icon";
 import { playbtn } from "../main";
 import { formatDate } from "./displaydate";
 
+const loadingScreen = document.querySelector("#three-loading");
+
 let measurements = [];
-let sgDg = { sg: 0, dg: 1 };
-let targetLevel = 0;
+export let sgDg = { sg: 0, dg: 1 };
+export let targetLevel = 0;
+export let targetPercentage = 0;
 let index = 0;
+export let currentLevel = 0;
 
 function calcWaterLevel(sg, dg, level) {
   dg = dg < level.value ? level.value : dg;
-
   let calculatedLevel = (level.value - sg) / (dg - sg);
+  return calculatedLevel;
+}
+function calcWaterLevelForWaterContainer(sg, dg, level) {
+  dg = dg < level.value ? level.value : dg;
+  let calculatedLevel = ((level.value - sg) / (dg - sg)) * 100;
   return calculatedLevel;
 }
 
 export function setMeasurements(data) {
   measurements = data.measurements;
   sgDg = data.sgDg;
-
+  console.log(sgDg);
+  console.log(measurements);
   targetLevel = calcWaterLevel(sgDg.sg, sgDg.dg, measurements[index]);
+
   formatDate(measurements[index].date);
+  targetPercentage = calcWaterLevelForWaterContainer(
+    sgDg.sg,
+    sgDg.dg,
+    measurements[index]
+  );
 }
 
 export async function threeInit() {
@@ -58,6 +73,8 @@ export async function threeInit() {
 
     updateCameraAspect(camera);
 
+    loadingScreen.classList.add("hidden");
+
     animate();
   }
 
@@ -89,8 +106,14 @@ export async function threeInit() {
               targetLevel = calcWaterLevel(
                 sgDg.sg,
                 sgDg.dg,
+                measurements[index],
+              );
+              targetPercentage = calcWaterLevelForWaterContainer(
+                sgDg.sg,
+                sgDg.dg,
                 measurements[index]
               );
+              currentLevel = measurements[index].value;
             }
           } else {
             const adjustment = currentWaterLevel < targetLevel ? 0.007 : -0.007;
