@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { LoadGLTFByPath } from "./threeHelpers";
 import { animateWater, water } from "./threeWater";
 
+const loadingScreen = document.querySelector("#three-loading");
+
 let measurements = [];
 let sgDg = { sg: 0, dg: 1 };
 let targetLevel = 0;
@@ -54,6 +56,8 @@ export async function threeInit() {
 
     updateCameraAspect(camera);
 
+    loadingScreen.classList.add("hidden");
+
     animate();
   }
 
@@ -79,7 +83,7 @@ export async function threeInit() {
               targetLevel = calcWaterLevel(
                 sgDg.sg,
                 sgDg.dg,
-                measurements[index]
+                measurements[index],
               );
             }
           } else {

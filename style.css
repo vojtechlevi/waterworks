@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 #docs-sidebar-backdrop {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
