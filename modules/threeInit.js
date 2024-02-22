@@ -4,9 +4,10 @@ import { animateWater, water } from "./threeWater";
 
 let measurements = [];
 export let sgDg = { sg: 0, dg: 1 };
-let targetLevel = 0;
+export let targetLevel = 0;
 export let targetPercentage = 0;
 let index = 0;
+export let currentLevel = 0;
 
 function calcWaterLevel(sg, dg, level) {
   dg = dg < level.value ? level.value : dg;
@@ -97,6 +98,7 @@ export async function threeInit() {
                 sgDg.dg,
                 measurements[index]
               );
+              currentLevel = measurements[index].value;
             }
           } else {
             const adjustment = currentWaterLevel < targetLevel ? 0.001 : -0.001;

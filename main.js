@@ -66,14 +66,14 @@ fm3.init({
     foregroundColor: "#1F2937",
     foregroundFluidLayer: {
       fillStyle: "#16E1FF",
-      angularSpeed: 30,
+      angularSpeed: 5,
       maxAmplitude: 5,
       frequency: 30,
       horizontalSpeed: -20,
     },
     backgroundFluidLayer: {
       fillStyle: "#4F8FC6",
-      angularSpeed: 100,
+      angularSpeed: 5,
       maxAmplitude: 3,
       frequency: 22,
       horizontalSpeed: 20,
