@@ -3,22 +3,33 @@ import { LoadGLTFByPath } from "./threeHelpers";
 import { animateWater, water } from "./threeWater";
 
 let measurements = [];
-let sgDg = { sg: 0, dg: 1 };
+export let sgDg = { sg: 0, dg: 1 };
 let targetLevel = 0;
+export let targetPercentage = 0;
 let index = 0;
 
 function calcWaterLevel(sg, dg, level) {
   dg = dg < level.value ? level.value : dg;
-
   let calculatedLevel = (level.value - sg) / (dg - sg);
+  return calculatedLevel;
+}
+function calcWaterLevelForWaterContainer(sg, dg, level) {
+  dg = dg < level.value ? level.value : dg;
+  let calculatedLevel = ((level.value - sg) / (dg - sg)) * 100;
   return calculatedLevel;
 }
 
 export function setMeasurements(data) {
   measurements = data.measurements;
   sgDg = data.sgDg;
-
+  console.log(sgDg);
+  console.log(measurements);
   targetLevel = calcWaterLevel(sgDg.sg, sgDg.dg, measurements[index]);
+  targetPercentage = calcWaterLevelForWaterContainer(
+    sgDg.sg,
+    sgDg.dg,
+    measurements[index]
+  );
 }
 
 export async function threeInit() {
@@ -77,6 +88,11 @@ export async function threeInit() {
             index++;
             if (index < measurements.length) {
               targetLevel = calcWaterLevel(
+                sgDg.sg,
+                sgDg.dg,
+                measurements[index]
+              );
+              targetPercentage = calcWaterLevelForWaterContainer(
                 sgDg.sg,
                 sgDg.dg,
                 measurements[index]

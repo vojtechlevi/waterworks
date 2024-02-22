@@ -1,11 +1,15 @@
-import { threeInit, setMeasurements } from "./modules/threeInit";
+import {
+  threeInit,
+  setMeasurements,
+  targetPercentage,
+  sgDg,
+} from "./modules/threeInit";
 import {
   valuesStartEnd,
   measureLocation,
   fetchSiteData,
 } from "./modules/fetchApi.js";
 import { FluidMeter } from "./modules/js-fluid-meter.js";
-
 measureLocation().then((locations) => {
   const dropdown = document.getElementById("location");
   // Build options list from this data
@@ -28,10 +32,7 @@ document
     const endDate = document.getElementById("enddate").value;
 
     fetchSiteData(location).then((siteData) => {
-      // console.log("sgdg: ", siteData);
-
       valuesStartEnd(startDate, endDate, location).then((measurements) => {
-        // console.log("levels: ", measurements);
         setMeasurements({ measurements, sgDg: siteData });
       });
     });
@@ -81,7 +82,7 @@ fm3.init({
 });
 
 window.onload = function () {
-  document.getElementById("submit-percentage-3").onclick = function () {
-    fm3.setPercentage(Number(document.getElementById("percentage-3").value));
-  };
+  setInterval(function () {
+    fm3.setPercentage(targetPercentage);
+  });
 };
