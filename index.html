@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <div
+      class="hs-overlay absolute bottom-2 left-2 lg:left-[22vw] flex items-center gap-3"
+    >
+      <button id="play-pause" class="bg-white p-5 rounded-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-play"
+        >
+          <polygon points="5 3 19 12 5 21 5 3" />
+        </svg>
+      </button>
+
+      <p id="dayDate" class="bg-white p-5 rounded-2xl hidden"></p>
+    </div>
+
     <!-- Navigation Toggle -->
     <button
       type="button"
@@ -33,7 +56,7 @@
 
     <div
       id="docs-sidebar"
-      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full xl:min-w-[20vw] transition-all duration-300 transform hidden fixed top-0 start-0 bottom-0 z-[60] w-[50vw] lg:w-[20vw] bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700"
+      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full xl:min-w-[20vw] transform hidden fixed top-0 start-0 bottom-0 z-[60] w-[50vw] lg:w-[20vw] bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="text-center">
         <a

@@ -1,6 +1,9 @@
 import * as THREE from "three";
 import { LoadGLTFByPath } from "./threeHelpers";
 import { animateWater, water } from "./threeWater";
+import { isPlaying, playFunction } from "./playpause-icon";
+import { playbtn } from "../main";
+import { formatDate } from "./displaydate";
 
 let measurements = [];
 let sgDg = { sg: 0, dg: 1 };
@@ -19,6 +22,7 @@ export function setMeasurements(data) {
   sgDg = data.sgDg;
 
   targetLevel = calcWaterLevel(sgDg.sg, sgDg.dg, measurements[index]);
+  formatDate(measurements[index].date);
 }
 
 export async function threeInit() {
@@ -69,13 +73,19 @@ export async function threeInit() {
 
     if (waterList != undefined && waterList.length > 0) {
       waterList.forEach((water) => {
-        if (measurements.length) {
+        if (measurements.length && isPlaying) {
           const currentWaterLevel = water.position.y;
 
-          if (Math.abs(currentWaterLevel - targetLevel) < 0.001) {
+          if (Math.abs(currentWaterLevel - targetLevel) < 0.007) {
             water.position.y = targetLevel;
             index++;
+            if (index > measurements.length - 1) {
+              playFunction(playbtn);
+              index = 0;
+              return;
+            }
             if (index < measurements.length) {
+              formatDate(measurements[index].date);
               targetLevel = calcWaterLevel(
                 sgDg.sg,
                 sgDg.dg,
@@ -83,7 +93,7 @@ export async function threeInit() {
               );
             }
           } else {
-            const adjustment = currentWaterLevel < targetLevel ? 0.001 : -0.001;
+            const adjustment = currentWaterLevel < targetLevel ? 0.007 : -0.007;
             water.position.y += adjustment;
           }
         }
