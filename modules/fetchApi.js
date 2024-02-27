@@ -5,10 +5,13 @@ export function fetchSiteData(location) {
     `https://data.goteborg.se/RiverService/v1.1/MeasureSites/2e864a63-859d-46b7-9c87-dd966f87595e/${location}?format=json`
   )
     .then((response) => response.json())
-    .then((data) => ({
-      sg: data.SG,
-      dg: data.DG,
-    }))
+    .then((data) => {
+      showWaterContainerIfDataReceived(data);
+      return {
+        sg: data.SG,
+        dg: data.DG,
+      };
+    })
     .catch((error) => {
       console.error("Error:", error);
     });
@@ -46,4 +49,10 @@ export function measureLocation() {
     .catch((error) => {
       console.error("Error:", error);
     });
+}
+function showWaterContainerIfDataReceived(data) {
+  if (data) {
+    const waterContainer = document.getElementById("fluid-meter-3");
+    waterContainer.classList.remove("hidden");
+  }
 }
