@@ -86,6 +86,8 @@ fm3.init({
 });
 
 window.onload = function () {
+  const playbtn = document.getElementById("play-pause");
+  playbtn.disabled = true;
   setInterval(function () {
     fm3.setPercentage(targetPercentage);
   });
