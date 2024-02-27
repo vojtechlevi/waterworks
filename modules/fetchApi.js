@@ -54,5 +54,9 @@ function showWaterContainerIfDataReceived(data) {
   if (data) {
     const waterContainer = document.getElementById("fluid-meter-3");
     waterContainer.classList.remove("hidden");
+    const playtext = document.getElementById("press-play");
+    playtext.classList.remove("hidden");
+    const playbtn = document.getElementById("play-pause");
+    playbtn.disabled = false;
   }
 }
