@@ -14,6 +14,7 @@ export let targetPercentage = 0;
 let index = 0;
 export let currentLevel = 0;
 let isWaterTimedOut = false;
+let initCameraRotation = { x: 0, y: 0, z: 0 };
 
 function calcWaterLevel(sg, dg, level) {
   dg = dg < level.value ? level.value : dg;
@@ -46,7 +47,7 @@ export async function threeInit() {
   let cameraList = [];
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xdddddd);
+  scene.background = new THREE.Color("#000");
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -71,6 +72,11 @@ export async function threeInit() {
     });
 
     camera = cameraList[0];
+    initCameraRotation = {
+      x: camera.rotation.x,
+      y: camera.rotation.y,
+      z: camera.rotation.z,
+    };
 
     updateCameraAspect(camera);
 
@@ -86,8 +92,30 @@ export async function threeInit() {
     camera.updateProjectionMatrix();
   }
 
+  // mouse
+  const mouse = { x: 0, y: 0 };
+
+  function setMousePos(clientX, clientY) {
+    mouse.x = clientX / window.innerWidth - 0.5;
+    mouse.y = clientY / window.innerHeight - 0.5;
+  }
+
+  window.addEventListener("mousemove", ({ clientX, clientY }) => {
+    setMousePos(clientX, clientY);
+  });
+
+  window.addEventListener("touchmove", (ev) => {
+    const { clientX, clientY } = ev.touches[0];
+    setMousePos(clientX, clientY);
+  });
+
   function animate() {
     requestAnimationFrame(animate);
+
+    if (camera) {
+      camera.rotation.y = initCameraRotation.y + -(mouse.x * 0.03);
+      camera.rotation.x = initCameraRotation.x + -(mouse.y * 0.05);
+    }
 
     if (waterList != undefined && waterList.length > 0) {
       waterList.forEach((water) => {
