@@ -13,6 +13,7 @@ export let targetLevel = 0;
 export let targetPercentage = 0;
 let index = 0;
 export let currentLevel = 0;
+let isWaterTimedOut = false;
 
 function calcWaterLevel(sg, dg, level) {
   dg = dg < level.value ? level.value : dg;
@@ -90,11 +91,12 @@ export async function threeInit() {
 
     if (waterList != undefined && waterList.length > 0) {
       waterList.forEach((water) => {
-        if (measurements.length && isPlaying) {
+        if (measurements.length && isPlaying && !isWaterTimedOut) {
           const currentWaterLevel = water.position.y;
 
           if (Math.abs(currentWaterLevel - targetLevel) < 0.007) {
             water.position.y = targetLevel;
+
             index++;
             if (index > measurements.length - 1) {
               playFunction(playbtn);
@@ -102,18 +104,22 @@ export async function threeInit() {
               return;
             }
             if (index < measurements.length) {
-              formatDate(measurements[index].date);
-              targetLevel = calcWaterLevel(
-                sgDg.sg,
-                sgDg.dg,
-                measurements[index],
-              );
-              targetPercentage = calcWaterLevelForWaterContainer(
-                sgDg.sg,
-                sgDg.dg,
-                measurements[index]
-              );
-              currentLevel = measurements[index].value;
+              isWaterTimedOut = true;
+              setTimeout(() => {
+                formatDate(measurements[index].date);
+                targetLevel = calcWaterLevel(
+                  sgDg.sg,
+                  sgDg.dg,
+                  measurements[index]
+                );
+                targetPercentage = calcWaterLevelForWaterContainer(
+                  sgDg.sg,
+                  sgDg.dg,
+                  measurements[index]
+                );
+                currentLevel = measurements[index].value;
+                isWaterTimedOut = false;
+              }, 1000);
             }
           } else {
             const adjustment = currentWaterLevel < targetLevel ? 0.007 : -0.007;
